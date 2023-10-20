@@ -1,0 +1,14 @@
+.loginContainer,.signupContainer{
+    margin-top: 5%;
+    background-color: beige;
+    padding-right: 3%;
+    padding-bottom: 3%;
+    padding-left: 3%;
+}
+.loginContainer{
+    width: fit-content;
+    height: fit-content;
+}
+legend{
+    text-align: center;
+}

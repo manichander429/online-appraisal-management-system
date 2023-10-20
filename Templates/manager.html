@@ -1,0 +1,179 @@
+{% extends "home.html" %}
+{% block style %}
+    <style>
+        .container {
+            margin-top: -10px;
+            overflow: hidden;
+
+        }
+
+        .assignTar,.assignedTargets {
+            color:black;
+        }
+
+        /* .assignTar {
+            background-color: #e0e0e0;
+        }
+
+        .assignedTargets {
+            background-color: #e0e0e0;
+        } */
+
+        .card:hover{
+            transform: scale(1.05);
+        }
+    </style>
+{% endblock %}
+{% block name %}
+    <strong>Hii {{name}}</strong>
+{% endblock %}
+{% block startPage %}
+    href = "/manager"
+{% endblock %}
+{% block dashBoardPage %}
+    href = "/dashboard"
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="">
+        <div class="d-block mx-auto assignTar w-50 p-3">
+            <p class="card-text" style="font-size: x-large; margin-left: 40%;">Assign Target</p>
+            <form action="/targets" method="POST" style="border: 1px solid black; padding: 15px;">
+                <input type="hidden" name="val" value="assignTarget">
+                <div class="mb-3">
+                    <label for="tarId" class="form-label">Target Id</label>
+                    <input type="text" name="tarId" id="tarId" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="empId" class="form-label">Employee Id</label>
+                    <input type="text" name="empId" id="empId" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="desc" class="form-label">Target Description</label>
+                    <input type="text" name="desc" id="desc" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="startDate" class="form-label">Start Date</label>
+                    <input type="date" name="startDate" id="startDate" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="expectedEndDate" class="form-label">End Date</label>
+                    <input type="date" name="expectedEndDate" id="expectedEndDate" class="form-control">
+                </div>
+                <button type="submit" class="btn btn-primary" style="margin-left: 50px;">Assign</button>
+            </form>
+            <p class="fs-3 mt-3">{{data}}</p>
+        </div>
+        <!-- <div class="employeesList mt-5" style="width: fit-content; margin: auto;">
+            <legend style="margin-left: 50px;">Employees List</legend>
+            <table class="table table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th class="col">Employee Id</th>
+                        <th class="col">Employee Name</th>
+                    </tr>
+                </thead>
+                <tbody class="table-group-divider">
+                    {% for doc in EmpDocs %}
+                        <tr>
+                            <th>{{doc["empId"]}}</th>
+                            <th>{{doc["empName"]}}</th>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div> -->
+     
+        <div class="assignedTargets row mt-4">
+            <p class="card-text" style="font-size: x-large; margin-left: 40%;">Assigned Targets</p>
+            <div class = "row row-cols-lg-3 row-cols-md-3 d-flex justify-content-center">
+                {% for doc in targets %}
+                    <!-- <div class = "card p-5 w-25 mx-2 my-2">
+                        <div class="mb-3">
+                            <p class="mb-0"><strong>Target ID:</strong> {{doc["tarId"]}}</p>
+                            <p class="mb-0"><strong>Employee ID:</strong> {{doc["empId"]}}</p>
+                            <p class="mb-0"><strong>Employee Name:</strong> {{doc["empName"]}}</p>
+                            <p class="mb-0"><strong>Start Date:</strong> {{doc["startDate"]}}</p>
+                            {% if doc["endDate"] %}
+                                <p class="mb-0"><strong>Completed Date:</strong> {{doc["endDate"]}}</p>
+                                <form action="/document" method="post">
+                                    <input type="hidden" name="tarId" value = "{{doc["tarId"]}}">
+                                    <input type="hidden" name="empId" value = "{{doc["empId"]}}">
+                                    <input type="submit" value="Document" class="btn btn-secondary">
+                                </form>
+                                <p class="text-success mt-2"><strong>Status: Completed</strong></p>
+                            {% else %}
+                                <p class="mb-0"><strong>Expected End Date:</strong> {{doc["expectedEndDate"]}}</p>
+                                <p class="text-danger"><strong>Status: Not Completed</strong></p>
+                            {% endif %}
+                            {% if doc["feedback"] %}
+                                <p class="mb-0"><strong>Feedback:</strong> {{doc["feedback"]}}</p>
+                            {% else %}
+                                <form action="/targets" method="POST">
+                                    <div class="mb-3">
+                                        <label for="feedback" class="form-label">Feedback</label>
+                                        <input type="text" name="feedback" id="feedback" class="form-control">
+                                        <input type="hidden" name="val" value="{{doc["tarId"]}}">
+                                        <button type="submit" class="btn btn-primary mt-3">Submit</button>
+                                    </div>
+                                </form>
+                            {% endif %}
+                        </div>
+                    </div> -->
+                    <div class="card rounded-lg shadow-sm mx-3 mb-3" style="background-color: #f6f6f6;">
+                        <div class="card-body">
+                            <h5 class="card-title mb-4">Target ID: {{doc["tarId"]}}</h5>
+                            <div class="row mb-3">
+                                <div class="col-6">
+                                    <p class="card-text mb-2"><strong>Employee ID</strong><br> {{doc["empId"]}}</p>
+                                </div>
+                                <div class="col-6">
+                                    <p class="card-text mb-2"><strong>Employee Name</strong><br> {{doc["empName"]}}</p>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-6">
+                                    <p class="card-text mb-2"><strong>Start Date</strong><br> {{doc["startDate"]}}</p>
+                                </div>
+                                <div class="col-6">
+                                    {% if doc["endDate"] %}
+                                    <p class="card-text mb-2"><strong>Completed Date</strong><br> {{doc["endDate"]}}</p>
+                                    {% else %}
+                                    <p class="card-text mb-2 text-danger"><strong>Status</strong><br> Not Completed</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-12">
+                                    {% if doc["endDate"] %}
+                                    <form action="/document" method="post">
+                                        <input type="hidden" name="tarId" value="{{doc["tarId"]}}">
+                                        <input type="hidden" name="empId" value="{{doc["empId"]}}">
+                                        <button type="submit" class="btn btn-primary btn-sm px-4" style="background-color: #007bff;">View Document</button>
+                                    </form>
+                                    {% endif %}
+                                    {% if not doc["feedback"] %}
+                                    <form action="/targets" method="POST">
+                                        <div class="form-group mt-3">
+                                            <label for="feedback" class="form-label mb-0"><strong>Feedback:</strong></label>
+                                            <input type="text" name="feedback" id="feedback" class="form-control" placeholder="Enter feedback here...">
+                                            <input type="hidden" name="val" value="{{doc["tarId"]}}">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary px-4 mt-3" style="background-color: #007bff;">Submit</button>
+                                    </form>
+                                    {% else %}
+                                    <div class="form-group mt-3">
+                                        <label for="feedback" class="form-label mb-0"><strong>Feedback:</strong></label>
+                                        <p class="card-text">{{doc["feedback"]}}</p>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}  
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

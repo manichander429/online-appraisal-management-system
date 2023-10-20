@@ -1,0 +1,205 @@
+{% extends "home.html" %}
+    {% block style %}
+        <!-- <style>
+            .container {
+                padding: 20px;
+            }
+
+            .custom-card {
+                border: 1px solid #dee2e6;
+                border-radius: 10px;
+                padding: 20px;
+                margin: 10px;
+                display: inline;
+            }
+
+            .form-label {
+                font-weight: bold;
+            }
+
+            .text-success {
+                color: #28a745; /* Green color for completed targets */
+            }
+
+            .text-danger {
+                color: #dc3545; /* Red color for not completed targets */
+            }
+
+            .border p {
+                margin: 0;
+            }
+
+            .border {
+                border: 1px solid black;
+                border-radius: 5px;
+                padding: 10px;
+            }
+        </style> -->
+        <style>
+            body {
+              font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            }
+          
+            .custom-card {
+              border: 1px solid #dee2e6;
+              border-radius: 0.25rem;
+              box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+            }
+          
+            .card {
+              border: 1px solid #dee2e6;
+              border-radius: 0.25rem;
+              box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+            }
+          
+            .btn-primary {
+              background-color: #007bff;
+              border-color: #007bff;
+            }
+            .card:hover{
+              transform: scale(1.05);
+              box-shadow: 0 0.125rem 0.25rem black;
+              /* transform: rotate3d(0.25rem); */
+            }
+          </style>
+    {% endblock %}
+    {% block name %}
+    <strong>Hii {{name}}</strong>
+    {% endblock %}
+    {% block dashBoardPage %}
+        href="/dashboard"
+    {% endblock %}
+    {% block startPage %}
+      href = "/{{role}}"
+    {% endblock %}
+    {% block setTargets %}
+        <a class="nav-link" href="/setTargets">SET-TARGETS</a>
+    {% endblock %}
+
+    {% block content %}
+        <!-- <div class="container">
+            <div class="row">
+                <h3 style="margin-left: 200px;;">Set Target</h3>
+                <div class="col-md-6" style="border: 1px solid black; padding: 20px;">
+                    <div class="custom-card">
+                        <form action="/setTargets" method="POST">
+                            <input type="hidden" name="val" value="setTarget">
+                            <div class="mb-3">
+                                <label for="num" class="form-label">Target Number</label>
+                                <input type="text" name="tarNum" id="tarNum" class="form-control">
+                            </div>
+                            <div class="mb-3">
+                                <label for="title" class="form-label">Title</label>
+                                <input type="text" name="title" id="title" class="form-control">
+                            </div>
+                            <div class="mb-3">
+                                <label for="desc" class="form-label">Goal Description</label>
+                                <input type="text" name="desc" id="desc" class="form-control">
+                            </div>
+
+                            <div class="mb-3">
+                                <p class="mb-0"><strong>Start Date</strong></p>
+                                <input type="date" name="startDate" id="startDate" class="form-control">
+                            </div>
+                            <div class="mb-3">
+                                <p class="mb-0"><strong>Expected End Date</strong></p>
+                                <input type="date" name="eEndDate" id="eEndDate" class="form-control">
+                            </div>
+                            <input type="submit" value="Submit" class="btn btn-primary" style="margin-left: 40%;">
+                        </form>
+                    </div>
+                </div>
+                {% if targets!=None %}
+                    <div class="col-md-6">
+                        <h3 style="margin-left: 180px; margin-top: -30px;">Targets Present</h3>
+                        <div class="targetsPresent" style="border: 1px solid black; padding: 10px;">
+                            {% for doc in targets %}
+                                <div class="mb-3 border p-3 targets">
+                                    <p class="mb-0"><strong>Target Number:</strong> {{doc["tarNum"]}}</p>
+                                    <p class="mb-0"><strong>Title:</strong> {{doc["title"]}}</p>
+                                    <p class="mb-0"><strong>Description:</strong> {{doc["desc"]}}</p>
+                                    <p class="mb-0"><strong>Start Date:</strong> {{doc["startDate"]}}</p>
+                                    {% if doc["endDate"] %}
+                                        <p class="mb-0"><strong>Completed Date:</strong> {{doc["endDate"]}}</p>
+                                        <p class="text-success"><strong>Status: Completed</strong></p>
+                                    {% else %}
+                                        <p class="mb-0"><strong>Expected End Date:</strong> {{doc["expectedEndDate"]}}</p>
+                                        <form action="/setTargets" method="POST">
+                                            <input type="hidden" name="val" value="{{doc["tarNum"]}}">
+                                            <input type="submit" value="Completed" class="btn btn-primary mt-2">
+                                        </form>
+                                        <p class="text-danger mt-2"><strong>Status: Not Completed</strong></p>
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div> -->
+        <div class="container">
+            <div class="row">
+              <div class="col-md-6 offset-md-3">
+                <h3 class="text-center mb-4">Set Target</h3>
+                <div class="custom-card p-4">
+                  <form action="/setTargets" method="POST" class="row g-3">
+                    <input type="hidden" name="val" value="setTarget">
+                    <div class="col-12 mb-3">
+                      <label for="num" class="form-label">Target Number</label>
+                      <input type="text" name="tarNum" id="tarNum" class="form-control" required>
+                    </div>
+                    <div class="col-12 mb-3">
+                      <label for="title" class="form-label">Title</label>
+                      <input type="text" name="title" id="title" class="form-control" required>
+                    </div>
+                    <div class="col-12 mb-3">
+                      <label for="desc" class="form-label">Goal Description</label>
+                      <input type="text" name="desc" id="desc" class="form-control" required>
+                    </div>
+          
+                    <div class="col-6 mb-3">
+                      <label for="startDate" class="form-label">Start Date</label>
+                      <input type="date" name="startDate" id="startDate" max="9999-12-31" class="form-control" required>
+                    </div>
+                    <div class="col-6 mb-3">
+                      <label for="eEndDate" class="form-label">Expected End Date</label>
+                      <input type="date" name="eEndDate" id="eEndDate" max="9999-12-31" class="form-control" required>
+                    </div>
+                    <div class="col-12">
+                      <button type="submit" class="btn btn-primary w-100">Submit</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          
+            {% if targets != None %}
+            <div class="row mt-4">
+              {% for doc in targets %}
+              <div class="col-md-4">
+                <div class="card mb-4">
+                  <div class="card-body">
+                    <h5 class="card-title">Target Number: {{doc["tarNum"]}}</h5>
+                    <h6 class="card-subtitle mb-4 text-muted">{{doc["title"]}}</h6>
+                    <p class="card-text"><strong>Description:</strong> {{doc["desc"]}}</p>
+                    {% if doc["endDate"] %}
+                    <p class="card-text"><strong>Status:</strong> Completed</p>
+                    <p class="card-text"><strong>Completed Date:</strong> {{doc["endDate"]}}</p>
+                    {% else %}
+                    <p class="card-text"><strong>Status:</strong> Not Completed</p>
+                    <p class="card-text"><strong>Expected End Date:</strong> {{doc["expectedEndDate"]}}</p>
+                    <form action="/setTargets" method="POST" class="mb-2">
+                      <input type="hidden" name="val" value="{{doc["tarNum"]}}">
+                      <button type="submit" class="btn btn-primary">Mark as Completed</button>
+                    </form>
+                    {% endif %}
+                    <hr>
+                    <p class="card-text"><small class="text-muted">Start Date: {{doc["startDate"]}}</small></p>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+            {% endif %}
+          </div>
+    {% endblock %}

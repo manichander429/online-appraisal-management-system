@@ -1,0 +1,129 @@
+{% extends "home.html" %}
+{% block style %}
+    <style>
+        .container {
+            margin-top: -1px;
+            overflow: hidden;
+            height: 94vh;
+        }
+    </style>
+    <style>
+        .card:hover {
+            transform: scale(1.05);
+            transition: all .2s ease-in-out;
+        }
+        .btn-primary {
+            background-color: #1E90FF;
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #008B8B;
+        }
+        .btn-success {
+            background-color: #32CD32;
+            border: none;
+        }
+        .btn-success:hover {
+            background-color: #228B22;
+        }
+        .text-success {
+            color: #32CD32;
+        }
+        .text-danger {
+            color: #DC143C;
+        }
+        
+        /* Media query for smaller screens */
+        @media only screen and (max-width: 768px) {
+            .card {
+                margin-bottom: 30px;
+            }
+        }
+    </style>
+{% endblock %}
+{% block name %}
+    <strong>Hii {{name}}</strong>
+{% endblock %}
+{% block startPage %}
+    href = "/employee"
+{% endblock %}
+{% block dashBoardPage %}
+    href="/dashboard"
+{% endblock %}
+{% block setTargets %}
+    <a class="nav-link" href="/setTargets">SET-TARGETS</a>
+{% endblock %}
+{% block content %}
+<!-- <div class="container">
+    <h3 style="margin-left: 450px;">Targets Assigned</h3>
+    <div class="row">
+        {% for doc in targets %}
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card" style=".card:hover{ transform: scale(1.1);}">
+                    <div class="card-body">
+                        <h5 class="card-title">Target ID: {{doc["tarId"]}}</h5>
+                        <p class="card-text">Assigned Date: {{doc["startDate"]}}</p>
+                        {% if doc["endDate"] %}
+                            <p class="card-text">Completed Date: {{doc["endDate"]}}</p>
+                            <form action="/document" method="post">
+                                <input type="hidden" name="tarId" value = "{{doc["tarId"]}}">
+                                <input type="hidden" name="empId" value = "{{doc["empId"]}}">
+                                <input type="submit" value="Document" class="btn btn-secondary">
+                            </form>
+                            <p class="text-success mt-2">Status: Completed</p>
+                        {% if doc["feedback"] %}
+                            <p class="mb-0"><strong>Feedback:</strong> {{doc["feedback"]}}</p>
+                        {% endif %}
+                        {% else %}
+                            <p class="card-text">Expected End Date: {{doc["expectedEndDate"]}}</p>
+                            <p class="text-danger">Status: Not Completed</p>
+                            <form action="/targets" method="POST" enctype="multipart/form-data">
+                                <input type="hidden" name="val" value="completedTarget">
+                                <input type="hidden" name="targetId" value = "{{doc["tarId"]}}">
+                                <input type="file" name="file" id="file" class="mb-3">
+                                <button type="submit" class="btn btn-success">Mark as Completed</button>
+                            </form>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div> -->
+<div class="container" style=" padding: 30px;">
+    <h3 style="text-align: center;" class="mb-5">Targets Assigned</h3>
+    <div class="row">
+        {% for doc in targets %}
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card" style="border: none; box-shadow: 0px 2px 10px rgba(0,0,0,0.3);">
+                    <div class="card-body">
+                        <h5 class="card-title mb-4">Target ID: {{doc["tarId"]}}</h5>
+                        <p class="card-text mb-2">Assigned Date: {{doc["startDate"]}}</p>
+                        {% if doc["endDate"] %}
+                            <p class="card-text mb-2">Completed Date: {{doc["endDate"]}}</p>
+                            <form action="/document" method="post" style="display: inline-block;">
+                                <input type="hidden" name="tarId" value = "{{doc["tarId"]}}">
+                                <input type="hidden" name="empId" value = "{{doc["empId"]}}">
+                                <input type="submit" value="Document" class="btn btn-success">
+                            </form>
+                            <p class="text-success mt-2">Status: Completed</p>
+                            {% if doc["feedback"] %}
+                            <p class="mb-0"><strong>Feedback:</strong> {{doc["feedback"]}}</p>
+                            {% endif %}
+                        {% else %}
+                            <p class="card-text mb-2">Expected End Date: {{doc["expectedEndDate"]}}</p>
+                            <p class="text-danger mb-4">Status: Not Completed</p>
+                            <form action="/targets" method="POST" enctype="multipart/form-data" style="display: inline-block;">
+                                <input type="hidden" name="val" value="completedTarget">
+                                <input type="hidden" name="targetId" value = "{{doc["tarId"]}}">
+                                <input type="file" name="file" id="file" class="mb-3">
+                                <button type="submit" class="btn btn-primary">Mark as Completed</button>
+                            </form>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

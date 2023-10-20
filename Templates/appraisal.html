@@ -1,0 +1,647 @@
+{% extends "home.html" %}
+
+{% block name %}
+    <strong>Hii {{name}}</strong>
+{% endblock %}
+
+{% block startPage %}
+    href="/{{role}}"
+{% endblock %}
+
+{% block dashBoardPage %}
+    href="/dashboard"
+{% endblock %}
+
+{% block setTargets %}
+    {% if role == "employee" %}
+        <a class="nav-link" href="/setTargets">SET-TARGETS</a>
+    {% endif %}
+{% endblock %}
+
+{% block style %}
+    <!-- <style>
+        body {
+            font-family: Arial, sans-serif;
+            /* background-color: #112150; */
+        }
+
+        .container {
+            /* background-color: #112150; */
+            /* border: 1px solid #ccc; */
+            border-radius: 5px;
+            margin: 20px auto;
+            max-width: 800px;
+            padding: 20px;
+        }
+
+        .appraisalPeriod {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #f0f0f057;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .setAppraisalGoals, .goalsList, .appraisalGoals {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-gap: 20px;
+            margin: 20px 0;
+            padding: 20px;
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .goal-card {
+            background-color: #2e185e;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            transition: box-shadow 0.3s;
+            cursor: pointer;
+            padding: 5%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .goal-card:hover {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        legend {
+            font-weight: bold;
+        }
+    </style> -->
+    <style>
+        .container{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .appraisalPeriod {
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
+            background-color: #f9f9f9;
+            color: #333;
+            font-family: sans-serif;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .appraisalPeriod strong {
+            font-weight: bold;
+        }
+        .appraisalPeriod1{
+            border: 1px solid black;
+        }
+        .setAppraisalGoals {
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
+            background-color: #f6f6f6;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            width: 500px;
+            margin: 0 auto;
+        }
+
+        .setAppraisalGoals form {
+        display: flex;
+        flex-direction: column;
+        }
+
+        .setAppraisalGoals label {
+        font-weight: bold;
+        margin-bottom: 5px;
+        }
+
+        .setAppraisalGoals input[type="text"],
+        .setAppraisalGoals input[type="date"] {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 15px;
+        border: none;
+        background-color: #e8e8e8;
+        border-radius: 3px;
+        box-sizing: border-box;
+        font-size: 14px;
+        }
+
+        .setAppraisalGoals input[type="submit"] {
+        background-color: #4CAF50;
+        color: #fff;
+        border: none;
+        padding: 10px 16px;
+        border-radius: 3px;
+        font-size: 16px;
+        cursor: pointer;
+        }
+
+        .setAppraisalGoals input[type="submit"]:hover {
+            background-color: #3e8e41;
+        }
+        h3 {
+  font-size: 28px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.goal-info {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: #555;
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+.goal-info strong {
+  font-weight: bold;
+  color: #111;
+}
+
+.goal-info p {
+  margin-bottom: 10px;
+}
+
+.goal-form {
+  max-width: 500px;
+  margin: 0 auto;
+  background-color: #f6f6f6;
+  border-radius: 5px;
+  padding: 20px;
+  color: #555;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.goal-form label {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.goal-form input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: none;
+  background-color: #e8e8e8;
+  border-radius: 5px;
+  font-size: 16px;
+  font-family: sans-serif;
+  color: #333;
+}
+
+.goal-form input[type="submit"] {
+  background-color: #4CAF50;
+  color: #fff;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 3px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.goal-form input[type="submit"]:hover {
+  background-color: #3e8e41;
+}
+.goalsList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-gap: 30px;
+}
+
+.card {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: #555;
+  font-size: 18px;
+  line-height: 1.5;
+  transition: all 0.3s ease-in-out;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.card strong {
+  font-weight: bold;
+  color: #111;
+}
+
+.card p {
+  margin-bottom: 10px;
+}
+
+@media only screen and (max-width: 768px) {
+  .goalsList {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+}
+.mb-3 {
+        margin-bottom: 1rem;
+      }
+
+      .form-label {
+        font-weight: bold;
+      }
+
+      input[type="date"],
+      input[type="text"] {
+        padding: 0.5rem;
+        border: 1px solid #ccc;
+        border-radius: 0.5rem;
+        margin-bottom: 1rem;
+        width: 100%;
+      }
+
+      input[type="submit"] {
+        background-color: #007bff;
+        color: white;
+        padding: 0.5rem 1rem;
+        border: none;
+        border-radius: 0.5rem;
+        cursor: pointer;
+      }
+
+      input[type="submit"]:hover {
+        background-color: #0069d9;
+      }
+
+      /* Responsive styles */
+      @media screen and (max-width: 768px) {
+        input[type="date"],
+        input[type="text"],
+        input[type="submit"] {
+          margin: 0.5rem 0;
+        }
+      }
+      /* body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+} */
+
+.containerApp {
+    /* background-color: #fff; */
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    /* max-width: 600px; */
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.appraisal-heading {
+    font-size: 24px;
+    color: #333;
+    margin: 0 0 20px;
+}
+
+.appraisal-goals {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between; /* Adjusted for two-card layout */
+}
+
+.card {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    width: calc(50% - 20px); /* Adjusted to fit two cards in each line with gap */
+    text-align: left;
+    transition: background-color 0.3s, transform 0.3s;
+    box-sizing: border-box; /* To account for padding and border width */
+}
+
+.card:hover {
+    background-color: #f0f0f0;
+    transform: scale(1.03);
+}
+
+strong {
+    font-weight: bold;
+}
+
+p {
+    font-size: 16px;
+    margin: 5px 0;
+}
+
+form {
+    margin-top: 10px;
+}
+
+input[type="submit"] {
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 15px;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+.goalsList {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+/* Styles for the appraisal goals cards */
+/* .card {
+    background-color: #ffffff;
+    border: 1px solid #e1e1e1;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: calc(33.33% - 1rem); 
+    margin-bottom: 1rem;
+    padding: 1rem;
+    transition: transform 0.2s;
+    text-align: left;
+} */
+
+.card:hover {
+    transform: scale(1.03);
+}
+
+/* Styles for text elements within the cards */
+strong {
+    font-weight: bold;
+}
+
+p {
+    margin: 8px 0;
+    font-size: 16px;
+}
+
+/* Additional styling for specific elements */
+/* .mb-e {
+    margin-bottom: 10px;
+}
+.mb-8 {
+    margin-bottom: 18px;
+} */
+
+/* Media query for smaller screens (adjust breakpoint as needed) */
+@media (max-width: 768px) {
+    .card {
+        width: 100%; /* Show one card per row on smaller screens */
+    }
+}
+
+    </style>
+{% endblock %}
+{% block content %}
+    {% if role == "employee" %}
+        <div class="container">
+            <div class="appraisalPeriod form-group">
+                <p><strong>Appraisal Period Start Date: </strong> {{appraisalPeriod["startDate"]}}</p>
+                <p><strong>Appraisal Period End Date: </strong> {{appraisalPeriod["endDate"]}}</p>
+                <p><strong>Criteria: </strong>{{appraisalPeriod["criteria"]}}</p>
+            </div>
+            <h3 class=" d-block mx-auto">Set Goals</h3>
+            <div class="setAppraisalGoals p-3">
+                <form action="/appraisal" method="POST" class="form">
+                    <div class="mb-3">
+                        <input type="hidden" name="val" value="setAppraisalGoals">
+                        <div class="mb-3">
+                            <label for="AppraisalNumber" class="form-label">Goal Number</label>
+                            <input type="text" name="AppraisalNumber" id="AppraisalNumber">
+                        </div>
+                        <div class="mb-3">
+                            <label for="Description" class="form-label">Description</label>
+                            <input type="text" name="desc" id="desc">
+                        </div>
+                        <div class="mb-3">
+                            <label for="startDate" class="form-label">Start Date</label>
+                            <input type="date" name="startDate" id="startDate">
+                        </div>
+                        <div class="mb-3">
+                            <label for="endDate" class="form-label">End Date</label>
+                            <input type="date" name="eEndDate" id="eEndDate">
+                        </div>
+                        <div class="mb-3">
+                            <input type="submit" value="submit">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="inline-block">
+                <div style="margin-left: 10px; display: inline;">
+                {% if goalsList!= None %}
+                    {% for doc in goalsList %}
+                        {% if doc["status"] == "change" %}
+                            <h3>Goal needs to be changed</h3>
+                            <div class="mb-3 border p-3">
+                                <p class="mb-0"><strong>Goal Number:</strong> {{doc["goalNumber"]}}</p>
+                                <p class="mb-0"><strong>Goal:</strong> {{doc["desc"]}}</p>
+                                <p class="mb-0"><strong>Feedback:</strong> {{doc["feedback"]}}</p>
+                            </div>
+                            <form action="/appraisal" method="post">
+                                <input type="hidden" name="val" value="changedGoal">
+                                <input type="hidden" name="goalNumber" value="{{doc["goalNumber"]}}">
+                                <input type="hidden" name="empId" value="{{doc["empId"]}}">
+                                <div class="mb-3">
+                                    <label for="changes">Changed Goal</label>
+                                    <input type="text" name="changedGoal" id="changedGoal">
+                                </div>
+                                <div class="mb-3">
+                                    <input type="submit" value="submit">
+                                </div>
+                            </form>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <div>
+            {% if goalsList != None %}
+                <div class="goalsList">
+                    <h3 style="margin-left: 200px;">Appraisal Goals</h3>
+                    {% for doc in goalsList %}
+                        <div class="card">
+                            <p class="mb-0"><strong>Goal Number:</strong> {{doc["goalNumber"]}}</p>
+                            <p class="mb-0"><strong>Goal: </strong>{{doc["desc"]}}</p>
+                            <p class="mb-0"><strong>Start Date:</strong> {{doc["startDate"]}}</p>
+                            <p class="mb-0"><strong>End Date:</strong> {{doc["endDate"]}}</p>
+                            <p class="mb-0"><strong>Status: </strong>{{doc["status"]}}</p>
+                            {% if "feedback" in doc %}
+                                <p class="mb-0"><strong>Feedback: </strong>{{doc["feedback"]}}</p>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            </div>
+        </div>
+    {% else %}
+    <!-- Manager -->
+        <div class="container">
+            <div class="appraisalPeriod">
+                {% if appraisalPeriod == None %}
+                    <legend>Set Appraisal Period</legend>
+                    <div class="mb-3">
+                        <form action="/appraisal" method="post">
+                            <input type="hidden" name="val" value="appraisalPeriod">
+                            <div class="mb-3">
+                                <label for="startDate" class="form-label">Appraisal Period Start Date</label>
+                                <input type="date" name="startDate" id="startDate">
+                            </div>
+                            <div class="mb-3">
+                                <label for="endDate" class="form-label">Appraisal Period End Date</label>
+                                <input type="date" name="endDate" id="endDate">
+                            </div>
+                            <div class="mb-3">
+                                <label for="endDate" class="form-label">Criteria</label>
+                                <input type="date" name="criteria" id="criteria">
+                            </div>
+                            <input type="submit" value="Submit">
+                        </form>
+                    </div>
+                {% else %}
+                    <div class="appraisalPeriod">
+                        <p class="mb-0"><strong>Appraisal Period Start Date:</strong> {{appraisalPeriod["startDate"]}}</p>
+                        <p class="mb-0"><strong>Appraisal Period End Date:</strong> {{appraisalPeriod["endDate"]}}</p>
+                        <p class="mb-0"><strong>Criteria:</strong>{{appraisalPeriod["criteria"]}}</p>
+                    </div>
+                    <legend>Update Appraisal</legend>
+                    <div class="mb-3">
+                        <form action="/appraisal" method="post">
+                            <input type="hidden" name="val" value="changeAppraisalPeriod">
+                            <div class="mb-3">
+                                <label for="startDate" class="form-label">Appraisal Period Start Date</label>
+                                <input type="date" name="startDate" id="startDate">
+                            </div>
+                            <div class="mb-3">
+                                <label for="endDate" class="form-label">Appraisal Period End Date</label>
+                                <input type="date" name="endDate" id="endDate">
+                            </div>
+                            <div class="mb-3">
+                                <label for="criteria" class="form-label">Criteria</label>
+                                <input type="text" name="criteria" id="criteria">
+                            </div>
+                            <input type="submit" value="Submit">
+                        </form>
+                    </div>
+                {% endif %}
+            </div>
+            <!-- {% if goalsList!= None %}
+                <h3 style="margin-left: 400px;">Appraisal Goals</h3>
+                <div class="appraisalGoals">
+                    {% for doc in goalsList %}
+                        <div class="card mt-3">
+                            <p><strong>Goal Number: </strong>{{doc["goalNumber"]}}</p>
+                            <p><strong>Employee Id: </strong>{{doc["empId"]}}</p>
+                            <p><strong>Employee Name: </strong>{{doc["empName"]}}</p>
+                            <p><strong>Goal: </strong>{{doc["desc"]}}</p>
+                            <p><strong>Start Date: </strong>{{doc["startDate"]}}</p>
+                            <p><strong>End Date: </strong>{{doc["endDate"]}}</p>
+                            {% if doc["status"] == "waiting" %}
+                                <form action="/appraisal" method="POST">
+                                    <input type="hidden" name="val" value="statusEvaluation">
+                                    <input name="submitButton" type="submit" value="Accept">
+                                    <input name="submitButton" type="submit" value="Change">
+                                    <input type="hidden" name="goalNumber" value="{{doc["goalNumber"]}}">
+                                    <input type="hidden" name="EmployeeId" value="{{doc["empId"]}}">
+                                </form>
+                            {% elif doc["status"] == "accept" %}
+                                <p><strong>Status: </strong> Accepted </p>
+                            {% elif doc["status"] == "change" %}
+                                <form action="/appraisal" method="post">
+                                    <input type="hidden" name="val" value="feedback">
+                                    <div class="mb-3">
+                                        <label for="feedback" class="form-label">Feedback</label>
+                                        <input type="text" name="feedback" id="feedback">
+                                    </div>
+                                    <input type="hidden" name="goalNumber" value="{{doc["goalNumber"]}}">
+                                    <input type="hidden" name="EmployeeId" value="{{doc["empId"]}}">
+                                    <input type="submit" value="submit">
+                                </form>
+                                <form action="/appraisal" method="post">
+                                    <input type="hidden" name="goalNumber" value="{{doc["goalNumber"]}}">
+                                    <input type="hidden" name="EmployeeId" value="{{doc["empId"]}}">
+                                    <input type="hidden" name="val" value="acceptGoal">
+                                    <input type="submit" value="acceptGoal">
+                                </form>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %} -->
+            <div class="containerApp">
+                {% if goalsList != None %}
+                <h3 class="appraisal-heading">Appraisal Goals</h3>
+                <div class="appraisal-goals">
+                    {% for doc in goalsList %}
+                    <div class="card mt-3">
+                        <p><strong>Goal Number: </strong>{{doc["goalNumber"]}}</p>
+                        <p><strong>Employee ID: </strong>{{doc["empId"]}}</p>
+                        <p><strong>Employee Name: </strong>{{doc["empName"]}}</p>
+                        <p><strong>Goal: </strong>{{doc["desc"]}}</p>
+                        <p><strong>Start Date: </strong>{{doc["startDate"]}}</p>
+                        <p><strong>End Date: </strong>{{doc["endDate"]}}</p>
+                        {% if doc["status"] == "waiting" %}
+                        <form action="/appraisal" method="POST">
+                            <input type="hidden" name="val" value="statusEvaluation">
+                            <input name="submitButton" type="submit" value="Accept">
+                            <input name="submitButton" type="submit" value="Change">
+                            <input type="hidden" name="goalNumber" value="{{doc["goalNumber"]}}">
+                            <input type="hidden" name="EmployeeId" value="{{doc["empId"]}}">
+                        </form>
+                        {% elif doc["status"] == "accept" %}
+                        <p><strong>Status: </strong> Accepted</p>
+                        {% elif doc["status"] == "change" %}
+                        <form action="/appraisal" method="post">
+                            <input type="hidden" name="val" value="feedback">
+                            <div class="mb-3">
+                                <label for="feedback" class="form-label">Feedback</label>
+                                <input type="text" name="feedback" id="feedback">
+                            </div>
+                            <input type="hidden" name="goalNumber" value="{{doc["goalNumber"]}}">
+                            <input type="hidden" name="EmployeeId" value="{{doc["empId"]}}">
+                            <input type="submit" value="submit">
+                        </form>
+                        <form action="/appraisal" method="post">
+                            <input type="hidden" name="goalNumber" value="{{doc["goalNumber"]}}">
+                            <input type="hidden" name="EmployeeId" value="{{doc["empId"]}}">
+                            <input type="hidden" name="val" value="acceptGoal">
+                            <input type="submit" value="acceptGoal">
+                        </form>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>        
+        </div>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,96 @@
+{% extends "home.html" %}
+    {% block name %}
+    <strong>Hii {{name}}</strong>
+    {% endblock %}
+    {% block dashBoardPage %}
+        href="/dashboard"
+    {% endblock %}
+    {% block startPage %}
+      href = "/{{role}}"
+    {% endblock %}
+    {% block setTargets %}
+      {% if role == "employee" %}
+        <a class="nav-link" href="/setTargets">SET-TARGETS</a>
+      {% endif %}
+    {% endblock %}
+    {% block Appraisal %}
+      {% if role == "employee" %}
+      <a class="nav-link" aria-disabled="true" href="/appraisal">Appraisal</a>
+      {% endif %}
+    {% endblock %}
+    {% block style %}
+      <style>
+        .barChart{
+          width: 50px;
+        }
+      </style>
+      
+    {% endblock %}
+    {% block content %}
+      {% if role == "employee" %}
+        <div>
+          <p id="managerBarChart" style="width: 500px; margin-left: 100px; background-color: black; display: inline-block;" class="mt-5"></p>
+          <p id="personalBarChart" style="width: 500px; margin-left: 100px; background-color: black; display: inline-block;" class="mt-5"></p>
+        </div>
+          <script>
+            var data =[{
+              x: ['tasks Assigned', 'tasks Completed', 'tasks Pending'],
+              y: {{x}},
+              type: 'bar',
+            }];
+            var layout = {
+              title: 'Manager Assigned Tasks Progress',
+              barmode: 'stack',
+              plot_bgcolor: "rgba(0,0,0,0)", // set plot background color to transparent
+              paper_bgcolor: "#f5f5f5" 
+            };
+          Plotly.newPlot('managerBarChart', data, layout);
+
+          var dataPersonal = [{
+            x : ['goalsCreated', 'goalsCompleted', 'goalsPending'],
+            y : {{dataPersonal}},
+            type: "bar"
+          }];
+          var layout = {
+            title : "Personal Goals Progress",
+            barmode : 'stack',
+            plot_bgcolor: "rgba(0,0,0,0)", // set plot background color to transparent
+            paper_bgcolor: "#f5f5f5" 
+          }
+          Plotly.newPlot('personalBarChart', dataPersonal, layout)
+          </script>
+      {% else %}
+      <h3 style="margin-left: 450px;">Employees Performance</h3>
+      {% for rec in empIds %}
+        <p style="margin-left: 80%;"><strong>Employee Id: </strong> {{rec["empId"]}}</p>
+        <p style="margin-left: 80%;"><strong>Employee Name: </strong>{{rec["empName"]}}</p>
+        <p id="bar+{{rec['empId']}}" style="width: 500px; background-color: black; display: inline-block;"></p>
+        <p id="bar1+{{rec['empId']}}" style="width: 500px; background-color: black; display: inline-block;"></p>
+        <script>
+          var data = [{
+            x: ['tasks Assigned', 'tasks Completed', 'tasks Pending'],
+            y: [ {{rec["total"]}}, {{rec["complete"]}}, {{rec["inComplete"]}} ],
+            type: "bar"
+          }];
+          var layout = {
+            barmode: 'stack',
+            plot_bgcolor: "rgba(0,0,0,0)", // set plot background color to transparent
+            paper_bgcolor: "#f5f5f5" 
+          };
+          Plotly.newPlot('bar+{{ rec["empId"] }}', data, layout);
+
+          var data = [{
+            x : ["CompletedOnTime", "LasteSubmissions"],
+            y : [{{rec["beComplete"]}}, {{rec["dueDates"]}}],
+            type : "bar"
+          }];
+          var layout = {
+            barmode: "stack",
+            plot_bgcolor: "rgba(0,0,0,0)", // set plot background color to transparent
+            paper_bgcolor: "#f5f5f5" 
+          }
+          Plotly.newPlot('bar1+{{ rec["empId"] }}', data, layout);
+        </script>
+      {% endfor %}
+      {% endif %}
+    {% endblock %}
